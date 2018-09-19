@@ -1,0 +1,55 @@
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+<!-- 引入样式 -->
+<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+<!-- 引入组件库 -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+
+
+<div id="file-box">
+  <file-select ref="inputer"></file-select>
+</div>
+
+<button onclick="upload()" style="margin: 20px 0px;">
+  upload
+</button>
+
+<script>
+  Vue.component('file-select', {
+                  data: function(){
+                      return {
+                        file: '',
+                      }
+                  },
+                  methods:{
+                    handleFileChange(e){
+                      let inputElem = this.$refs.inputer;
+                      this.file = inputElem.files[0];
+                      console.log(this)
+                      console.log(this.file)
+                      let nameElem = this.$refs.fileName;
+                      nameElem.innerHTML = this.file ? this.file.name : '请选择文件'; 
+                    }
+                  },
+                  template: `
+                      <div>
+                        <!--好像有的地方要 class="hidden" ?? -->
+                        <input id="file-inputer" type="file" hidden @change="handleFileChange" ref="inputer">
+                        <el-button size="medium" style="padding:0px; height:30px;">
+                          <label for="file-inputer" style="padding:10px 20px;">
+                            hello
+                          </label>
+                        </el-button>
+                        <label ref="fileName">
+                          请选择文件
+                        </label>
+                      </div>
+                  `
+              })
+  var file_vue = new Vue({
+    el: "#file-box",
+  })
+  
+  function upload(){
+    console.log(file_vue.$refs.inputer.file)
+  }
+</script>
